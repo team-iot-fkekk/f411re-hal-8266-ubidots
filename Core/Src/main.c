@@ -66,11 +66,13 @@ const char UBIDOTS_TOKEN[] =   "BBFF-MxzBzLYnOGI6gFJS9L5mlKCEJJmYQD";
 const char UBIDOTS_DEVICE[] = "Demo";
 
 char sendBuff[512], sendBuff2[512];
+char sendBuffer[512];
+char message[128];
+
 uint8_t recArr[64], recData;
 uint8_t buffLen, buffLen2, buffCnt = 0;
 uint8_t count = 0;
-char sendBuffer[512];
-char message[128];
+
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
@@ -136,7 +138,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  count++;
+	  count++;		// increment counter
 
 	  // connect Ubidots server
 	  buffLen = sprintf(sendBuff, "AT+CIPSTART=\"TCP\",\"things.ubidots.com\",80\r\n");
@@ -147,7 +149,7 @@ int main(void)
 	  sprintf(message, "{\"counter\": %d}", (int)count);
 	  printf("Content Length = %d\r\n", (int)strlen(message));
 
-	  // after connection to Ubidots prepare data to send
+	  // after connection to Ubidots, prepare data to send
 	  buffLen = sprintf(sendBuff, "POST /api/v1.6/devices/%s/?token=%s HTTP/1.1\r\nHost: things.ubidots.com\r\nContent-Type: application/json\r\nContent-Length: %d\r\n\r\n%s", UBIDOTS_DEVICE, UBIDOTS_TOKEN, (int)strlen(message),message);
 	  buffLen2 = sprintf(sendBuff2, "AT+CIPSEND=%d\r\n", buffLen);
 
@@ -156,7 +158,7 @@ int main(void)
 	  HAL_Delay(1000);
 	  HAL_UART_Transmit(&huart1, (uint8_t *)sendBuff, buffLen, 1000);
 
-	  // wait for 30sn to send new data
+	  // wait for 15s to send new data
 	  HAL_Delay(15000);
   }
   /* USER CODE END 3 */
