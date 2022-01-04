@@ -60,9 +60,9 @@ static void MX_USART1_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-const char WIFI_NAME[] = "GxA50";
-const char WIFI_PASSW[] = "iemx6540";
-const char UBIDOTS_TOKEN[] =   "BBFF-MxzBzLYnOGI6gFJS9L5mlKCEJJmYQD";
+const char WIFI_NAME[] = "GET_SSID";
+const char WIFI_PASSW[] = "GET_PASSWORD";
+const char UBIDOTS_TOKEN[] =   "GET_TOKEN";
 const char UBIDOTS_DEVICE[] = "Demo";
 
 char sendBuff[512], sendBuff2[512];
